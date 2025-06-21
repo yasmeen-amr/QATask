@@ -1,0 +1,48 @@
+package Tests;
+
+import Pages.TestReportListener;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import Pages.ProductSearch;
+
+@Listeners(TestReportListener.class)
+public class ProductSearchTest extends BaseTest
+{
+    @Test
+    public void ProductSearchTest() throws  InterruptedException
+    {
+        ProductSearch productSearch = new ProductSearch(driver);
+        productSearch.clickSigin();
+        productSearch.clickCreateAccount();
+        productSearch.enterFirstName("mxxpo");
+        productSearch.enterLastName("Dxopo");
+        productSearch.enterEmail("9Ftxu6p@example.com");
+        productSearch.enterPassword("Mn123p460$");
+        productSearch.enterConfirmPassword("Mn123p460$");
+        Thread.sleep(3000);
+        productSearch.clickCreateanAccount();
+        Thread.sleep(3000);
+        String product = "pants";
+        productSearch.enterSearch(product);
+        productSearch.clickSearchButton();
+        Thread.sleep(3000);
+        productSearch.scrollDown();
+
+        Assert.assertTrue(productSearch.isSearchResultDisplayed(), "Search results are not displayed.");
+        Assert.assertTrue(productSearch.getSearchTitle().toLowerCase().contains(product),
+                "Search title does not contain the expected keyword.");
+    }
+
+
+    @Test
+    public void invalidProductSearchTest() throws  InterruptedException
+    {
+        ProductSearch productSearch1 = new ProductSearch(driver);
+        String product = "dress";
+        Thread.sleep(3000);
+        productSearch1.enterSearch(product);
+        Thread.sleep(3000);
+        productSearch1.clickSearchButton();
+    }
+}
